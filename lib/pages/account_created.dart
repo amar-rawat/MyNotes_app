@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/providers/all_providers.dart';
+import 'package:provider/provider.dart';
 
 class AccountCreated extends StatefulWidget {
   const AccountCreated({super.key});
@@ -71,6 +73,7 @@ class _AccountCreatedState extends State<AccountCreated> {
             ),
             TextButton(
                 onPressed: () {
+                  context.read<ButtonStateProvider>().changeButton(false);
                   Navigator.pushNamed(context, '/login');
                 },
                 child: Title(
