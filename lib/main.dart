@@ -8,9 +8,15 @@ import 'package:notes_app/pages/registration.dart';
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+    apiKey: "AIzaSyBOeoYEVPIVZFD7rEGRKO7mAq8mQ_m_Cxk",
+    appId: "1:627842783755:android:1fdac8e552b7f79b6cc50e",
+    messagingSenderId: "627842783755",
+    projectId: 'mynotes-4c8b4',
+  ));
   runApp(const MyApp());
 }
 
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          initialRoute: '/notesCardPage',
+          initialRoute: '/login',
           routes: {
             '/login': (context) => const LoginPage(),
             '/register': (context) => const Register(),
