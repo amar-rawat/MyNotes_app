@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:notes_app/widgets/logout_dialog_box.dart';
+import 'package:notes_app/widgets/notes_card.dart';
 import 'package:provider/provider.dart';
 
 class NotesCardPage extends StatelessWidget {
@@ -13,8 +14,15 @@ class NotesCardPage extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 192, 157, 252),
       appBar: AppBar(
         title: const Text('My Notes'),
+        leading: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Image.asset(
+            'assets/images/notes_image.png',
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -33,6 +41,21 @@ class NotesCardPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(40)),
           child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 5,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int index) {
+                return NotesCard();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

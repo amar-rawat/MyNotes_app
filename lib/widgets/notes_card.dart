@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/providers/all_providers.dart';
-import 'package:notes_app/widgets/logout_dialog_box.dart';
-import 'package:provider/provider.dart';
 
-class NotesCardPage extends StatelessWidget {
-  const NotesCardPage({super.key});
+class NotesCard extends StatelessWidget {
+  const NotesCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    logout() {
-      LogoutAlertDialog.logoutAlertDialog(context);
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Notes'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                logout();
-                context.read<ButtonStateProvider>().changeButton(false);
-              },
-              icon: const Icon(Icons.logout))
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/notesDetailPage',
+          );
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.20,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 219, 198, 255),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Title ' * 3,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                Divider(thickness: 1, color: Colors.deepPurple),
+                Text('Body....' * 20)
+              ],
+            ),
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          elevation: 10,
-          backgroundColor: Colors.deepPurple,
-          tooltip: 'Add new note',
-          shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(40)),
-          child: const Icon(Icons.add)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

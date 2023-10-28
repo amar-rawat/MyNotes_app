@@ -7,7 +7,6 @@ class NotesDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _title = TextEditingController();
     TextEditingController _notesBody = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Notes'),
