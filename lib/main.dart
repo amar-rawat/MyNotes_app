@@ -2,8 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/pages/account_created.dart';
 import 'package:notes_app/pages/login.dart';
+import 'package:notes_app/pages/note_edit_page.dart';
 import 'package:notes_app/pages/notes_card_page.dart';
-import 'package:notes_app/pages/notes_detail_page.dart';
+import 'package:notes_app/pages/note_add_page.dart.dart';
 import 'package:notes_app/pages/registration.dart';
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => ButtonStateProvider())
+          ChangeNotifierProvider(create: (_) => ButtonStateProvider()),
+          ChangeNotifierProvider(create: (_) => NoteDataGiver()),
         ],
         child: MaterialApp(
           title: 'My Notes',
@@ -34,13 +36,14 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          initialRoute: '/login',
+          initialRoute: '/notesCardPage',
           routes: {
             '/login': (context) => const LoginPage(),
             '/register': (context) => const Register(),
             '/accountCreated': (context) => const AccountCreated(),
             '/notesCardPage': (context) => const NotesCardPage(),
-            '/notesDetailPage': (context) => const NotesDetailPage(),
+            '/noteEditPage': (context) => const NoteEditPage(),
+            '/noteAddPage': (context) => const NoteAddPage(),
           },
         ));
   }

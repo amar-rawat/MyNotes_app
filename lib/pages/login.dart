@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:notes_app/widgets/alert_dialogue.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatelessWidget {
             email: _email.text.trim(), password: _password.text.trim());
         if (FirebaseAuth.instance.currentUser!.uid.isNotEmpty) {
           await context.read<ButtonStateProvider>().changeButton(true);
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
           Navigator.pushNamedAndRemoveUntil(
               context, '/notesCardPage', (route) => false);
           context.read<ButtonStateProvider>().changeButton(false);
@@ -30,8 +31,16 @@ class LoginPage extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialogBox(
-                error: '${e.message}',
+              return AlertDialog(
+                title: const Text('Error'),
+                content: Text('${e.message}'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Ok'))
+                ],
               );
             });
       }
@@ -145,7 +154,7 @@ class LoginPage extends StatelessWidget {
                             padding: const EdgeInsets.all(4.0),
                             child: Image.asset('assets/images/google_logo.png'),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           const Text(
                             'SignIn with Google',
                             style: TextStyle(

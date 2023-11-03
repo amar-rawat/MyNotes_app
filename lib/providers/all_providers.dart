@@ -16,3 +16,22 @@ class ButtonStateProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class NoteDataGiver with ChangeNotifier {
+  String title;
+  String body;
+  String docID;
+  NoteDataGiver({
+    this.body = 'body',
+    this.title = 'title',
+    this.docID = 'doc id',
+  });
+
+  noteDataGiver(String title, String body, String docID) {
+    title = title;
+    body = body;
+
+    docID = docID;
+    notifyListeners();
+  }
+}
