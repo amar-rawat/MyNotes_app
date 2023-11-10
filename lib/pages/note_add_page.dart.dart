@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:notes_app/services/Firestore.dart';
+import 'package:notes_app/widgets/card_colors.dart';
 import 'package:provider/provider.dart';
 
 class NoteAddPage extends StatelessWidget {
@@ -12,9 +16,16 @@ class NoteAddPage extends StatelessWidget {
     TextEditingController _notesBody = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 219, 198, 255),
+      backgroundColor: CardColors
+          .cardColorList[Random().nextInt(CardColors.cardColorList.length - 1)],
       appBar: AppBar(
-        title: const Text('My Notes'),
+        title: const Text(
+          'Hot Notes',
+          // style: GoogleFonts.abel(),
+        ),
+        leading: Lottie.asset(
+          'assets/lottie_json/note_image.json',
+        ),
       ),
       body: Consumer(builder: (BuildContext context, value, Widget? child) {
         return Form(
@@ -46,27 +57,43 @@ class NoteAddPage extends StatelessWidget {
                               contentPadding: EdgeInsets.only(left: 6),
                               border: InputBorder.none,
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "";
-                              }
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return "";
+                            //   }
+                            //   return null;
+                            // },
                           ),
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                firestoreService.addNote(
-                                    _title.text, _notesBody.text);
-                                _title.clear();
-                                _notesBody.clear();
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Body can not be empty...'),
-                                    duration: Duration(seconds: 1),
-                                  ),
+                              try {
+                                if (_formKey.currentState!.validate() &&
+                                    (_title.text != '' &&
+                                        _notesBody.text != '')) {
+                                  firestoreService.addNote(
+                                      _title.text, _notesBody.text);
+                                  _title.clear();
+                                  _notesBody.clear();
+                                  Navigator.pop(context);
+                                } else if (_title.text.isEmpty ||
+                                    _notesBody.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Title and Body can not be empty...'),
+                                      duration: Duration(seconds: 1),
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Text(e.toString()),
+                                    );
+                                  },
                                 );
                               }
                             },

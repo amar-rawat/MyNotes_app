@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/pages/account_created.dart';
 import 'package:notes_app/pages/login.dart';
+import 'package:notes_app/pages/note_add_page.dart.dart';
 import 'package:notes_app/pages/note_edit_page.dart';
 import 'package:notes_app/pages/notes_card_page.dart';
-import 'package:notes_app/pages/note_add_page.dart.dart';
 import 'package:notes_app/pages/registration.dart';
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:provider/provider.dart';
@@ -36,12 +37,14 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          initialRoute: '/notesCardPage',
+          initialRoute: FirebaseAuth.instance.currentUser == null
+              ? '/login'
+              : '/noteCardPage',
           routes: {
             '/login': (context) => const LoginPage(),
             '/register': (context) => const Register(),
             '/accountCreated': (context) => const AccountCreated(),
-            '/notesCardPage': (context) => const NotesCardPage(),
+            '/noteCardPage': (context) => const NotesCardPage(),
             '/noteEditPage': (context) => const NoteEditPage(),
             '/noteAddPage': (context) => const NoteAddPage(),
           },

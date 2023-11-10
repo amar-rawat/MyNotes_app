@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/providers/all_providers.dart';
 import 'package:notes_app/widgets/alert_dialogue.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -57,9 +58,13 @@ class Register extends StatelessWidget {
                     child: Image.asset("assets/images/register_image.png",
                         fit: BoxFit.cover),
                   ),
-                  const Text(
-                    'Welcome',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  Shimmer(
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.red, Colors.green]),
+                    child: const Text(
+                      'Welcome!',
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(30),

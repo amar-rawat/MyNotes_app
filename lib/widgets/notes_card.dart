@@ -1,5 +1,9 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/providers/all_providers.dart';
+import 'package:notes_app/widgets/card_colors.dart';
+import 'package:provider/provider.dart';
 
 class NotesCard extends StatelessWidget {
   NotesCard(
@@ -16,9 +20,10 @@ class NotesCard extends StatelessWidget {
     CollectionReference MyNotes =
         FirebaseFirestore.instance.collection("MyNotes");
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: InkWell(
         onTap: () {
+          context.read<NoteDataGiver>().noteDataGiver(title, body, docID);
           Navigator.pushNamed(
             context,
             '/noteEditPage',
@@ -28,7 +33,8 @@ class NotesCard extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.19,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 219, 198, 255),
+            color: CardColors.cardColorList[
+                Random().nextInt(CardColors.cardColorList.length - 1)],
             borderRadius: BorderRadius.circular(20),
           ),
           child: Padding(
@@ -52,10 +58,40 @@ class NotesCard extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.edit)),
+                            onPressed: () {
+                              context
+                                  .read<NoteDataGiver>()
+                                  .noteDataGiver(title, body, docID);
+                              Navigator.pushNamed(
+                                context,
+                                '/noteEditPage',
+                              );
+                            },
+                            icon: const Icon(Icons.edit)),
                         IconButton(
                           onPressed: () {
-                            MyNotes.doc(docID).delete();
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(
+                                      'Are you sure, You want to delete this note ?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('No')),
+                                    TextButton(
+                                        onPressed: () {
+                                          MyNotes.doc(docID).delete();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Yes'))
+                                  ],
+                                );
+                              },
+                            );
                           },
                           icon: const Icon(Icons.delete),
                         )

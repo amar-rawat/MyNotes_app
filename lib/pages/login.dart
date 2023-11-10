@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:notes_app/providers/all_providers.dart';
-import 'package:notes_app/widgets/alert_dialogue.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -22,8 +22,7 @@ class LoginPage extends StatelessWidget {
           await context.read<ButtonStateProvider>().changeButton(true);
           await Future.delayed(const Duration(seconds: 1));
           Navigator.pushNamedAndRemoveUntil(
-              context, '/notesCardPage', (route) => false);
-          context.read<ButtonStateProvider>().changeButton(false);
+              context, '/noteCardPage', (route) => false);
         } else {
           return null;
         }
@@ -64,9 +63,13 @@ class LoginPage extends StatelessWidget {
                   Image.asset("assets/images/welcome_image.png",
                       fit: BoxFit.cover),
                   const SizedBox(height: 30),
-                  const Text(
-                    'Welcome Back!',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  Shimmer(
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.red, Colors.green]),
+                    child: const Text(
+                      'Welcome Back!',
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(30),
