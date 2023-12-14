@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LogoutAlertDialog {
@@ -16,6 +17,7 @@ class LogoutAlertDialog {
                 child: const Text('Cancel')),
             TextButton(
                 onPressed: () {
+                  FirebaseAuth.instance.signOut();
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/login', (route) => false);
                 },

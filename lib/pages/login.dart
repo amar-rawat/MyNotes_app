@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:notes_app/providers/all_providers.dart';
-import 'package:notes_app/widgets/alert_dialogue.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -19,10 +20,9 @@ class LoginPage extends StatelessWidget {
             email: _email.text.trim(), password: _password.text.trim());
         if (FirebaseAuth.instance.currentUser!.uid.isNotEmpty) {
           await context.read<ButtonStateProvider>().changeButton(true);
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
           Navigator.pushNamedAndRemoveUntil(
-              context, '/notesCardPage', (route) => false);
-          context.read<ButtonStateProvider>().changeButton(false);
+              context, '/noteCardPage', (route) => false);
         } else {
           return null;
         }
@@ -30,8 +30,16 @@ class LoginPage extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialogBox(
-                error: '${e.message}',
+              return AlertDialog(
+                title: const Text('Error'),
+                content: Text('${e.message}'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Ok'))
+                ],
               );
             });
       }
@@ -55,9 +63,13 @@ class LoginPage extends StatelessWidget {
                   Image.asset("assets/images/welcome_image.png",
                       fit: BoxFit.cover),
                   const SizedBox(height: 30),
-                  const Text(
-                    'Welcome Back!',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  Shimmer(
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.red, Colors.green]),
+                    child: const Text(
+                      'Welcome Back!',
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(30),
@@ -145,7 +157,7 @@ class LoginPage extends StatelessWidget {
                             padding: const EdgeInsets.all(4.0),
                             child: Image.asset('assets/images/google_logo.png'),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           const Text(
                             'SignIn with Google',
                             style: TextStyle(

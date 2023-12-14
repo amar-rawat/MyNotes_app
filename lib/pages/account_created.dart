@@ -74,7 +74,8 @@ class _AccountCreatedState extends State<AccountCreated> {
             TextButton(
                 onPressed: () {
                   context.read<ButtonStateProvider>().changeButton(false);
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/login', (route) => false);
                 },
                 child: Title(
                     color: Colors.black, child: const Text('Go to login page')))
