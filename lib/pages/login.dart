@@ -172,7 +172,8 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/register');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/register', (route) => false);
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

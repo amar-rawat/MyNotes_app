@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
   //  get the collection of notes from database
@@ -10,7 +11,8 @@ class FirestoreService {
     return MyNotes.add({
       'Note Title': noteTitle,
       'Note Body': noteBody,
-      'Time Stamp': Timestamp.now()
+      'Time Stamp': Timestamp.now(),
+      'User ID': FirebaseAuth.instance.currentUser!.uid,
     });
   }
 
