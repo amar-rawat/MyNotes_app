@@ -150,7 +150,8 @@ class Register extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/login', (route) => false);
                     },
                     child: const Text(
                       'Back to login page',

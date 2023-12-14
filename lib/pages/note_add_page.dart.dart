@@ -57,53 +57,48 @@ class NoteAddPage extends StatelessWidget {
                               contentPadding: EdgeInsets.only(left: 6),
                               border: InputBorder.none,
                             ),
-                            // validator: (value) {
-                            //   if (value!.isEmpty) {
-                            //     return "";
-                            //   }
-                            //   return null;
-                            // },
                           ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              try {
-                                if (_formKey.currentState!.validate() &&
-                                    (_title.text != '' &&
-                                        _notesBody.text != '')) {
-                                  firestoreService.addNote(
-                                      _title.text, _notesBody.text);
-                                  _title.clear();
-                                  _notesBody.clear();
-                                  Navigator.pop(context);
-                                } else if (_title.text.isEmpty ||
-                                    _notesBody.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Title and Body can not be empty...'),
-                                      duration: Duration(seconds: 1),
-                                    ),
-                                  );
-                                }
-                              } catch (e) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: Text(e.toString()),
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                            child: Text('Add Note')),
-                        const SizedBox(
-                          height: 1,
                         ),
                       ],
                     ),
                   ),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      try {
+                        if (_formKey.currentState!.validate() &&
+                            (_title.text != '' && _notesBody.text != '')) {
+                          firestoreService.addNote(
+                            _title.text,
+                            _notesBody.text,
+                          );
+                          _title.clear();
+                          _notesBody.clear();
+                          Navigator.pop(context);
+                        } else if (_title.text.isEmpty ||
+                            _notesBody.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('Title and Body can not be empty...'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text(e.toString()),
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Add Note')),
+                const SizedBox(
+                  height: 1,
                 ),
               ],
             ),

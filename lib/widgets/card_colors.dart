@@ -6,9 +6,9 @@ class CardColors {
   static Color red = Colors.red.shade100;
   static Color purple = Colors.deepPurple.shade100;
   static Color green = Colors.green.shade100;
+  static Color greenaccent = Colors.greenAccent.shade100;
   static Color yellow = Colors.yellow.shade100;
   static Color orange = Colors.orange.shade100;
-  static Color grey = Colors.grey.shade100;
   static Color indigo = Colors.indigo.shade100;
   static Color brown = Colors.brown.shade100;
 
@@ -20,7 +20,7 @@ class CardColors {
     green,
     yellow,
     orange,
-    grey,
+    greenaccent,
     indigo,
     brown
   ];
